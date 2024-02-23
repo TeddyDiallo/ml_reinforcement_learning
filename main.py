@@ -17,8 +17,8 @@ def main():
     epsilon = 1.0
     decay_rate= 0.005
 
-    num_episodes = 10
-    max_steps = 5 
+    num_episodes = 100
+    max_steps = 9
 
     for episode in range(num_episodes):
 
@@ -43,15 +43,16 @@ def main():
             done = result[2]
             info = result[3]
             
-            print("State:", state[0][0])
-            print("Action:", action)
+            # print("State:", state[0][0])
+            # print("Action:", action)
+            print("Iteration: ", episode * s)
 
     
             # Q-learning algorithm
             qtable[state[0][0],action] = qtable[state[0][0],action] + learning_rate * (reward + discount_rate * np.max(qtable[new_state,:])-qtable[state[0][0],action])
 
             # Update to our new state
-            print("new state:", new_state)
+            # print("new state:", new_state)
             state[0] = [new_state]
 
 
@@ -65,6 +66,7 @@ def main():
     print(f"Training completed over {num_episodes} episodes")
     input("Press Enter to watch trained agent...")
 
+    max_steps = 99
     # watch trained agent
     state = [env.reset()]
     done = False

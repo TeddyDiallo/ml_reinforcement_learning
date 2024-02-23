@@ -17,8 +17,8 @@ def main():
     epsilon = 1.0
     decay_rate= 0.005
 
-    num_episodes = 100
-    max_steps = 9 
+    num_episodes = 10
+    max_steps = 5 
 
     for episode in range(num_episodes):
 
@@ -76,11 +76,16 @@ def main():
         print("Step {}".format(s+1))
 
         action = np.argmax(qtable[state[0][0],:])
-        new_state, reward, done, info = env.step(action)
+        result = env.step(action)  
+        new_state = result[0]
+        reward = result[1]
+        done = result[2]
+        info = result[3]
+    
         rewards += reward
         env.render()
         print(f"score: {rewards}")
-        state[0] = new_state
+        state[0] = [new_state]
 
         if done == True:
             break

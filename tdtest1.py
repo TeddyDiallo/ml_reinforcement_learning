@@ -2,6 +2,7 @@ import numpy as np
 import gymnasium as gym
 import random
 
+##DOESNT WORK!!!
 
 def main():
     # Create taxi environment

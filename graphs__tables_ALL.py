@@ -175,6 +175,11 @@ def main():
     sarsa_rewards = np.zeros(num_episodes)
     td_learning_rewards = np.zeros(num_episodes)
     
+    #for the table
+    last_episode_rewards_q_learning = np.zeros(num_runs)  
+    last_episode_rewards_sarsa = np.zeros(num_runs)
+    last_episode_rewards_td_learning = np.zeros(num_runs)
+    
     for run in range(num_runs):
         qtable_q_learning = np.zeros((env.observation_space.n, env.action_space.n))
         qtable_sarsa = np.zeros((env.observation_space.n, env.action_space.n))
@@ -188,17 +193,23 @@ def main():
         q_learning_rewards += np.array(episode_rewards_q_learning)
         sarsa_rewards += np.array(episode_rewards_sarsa)
         td_learning_rewards += np.array(episode_rewards_td_learning)
+        
+        
+        #you can comment out these 3 lines below if you just want the graph to go faster
+        last_episode_rewards_q_learning[run] = episode_rewards_q_learning[-1]
+        last_episode_rewards_sarsa[run] = episode_rewards_sarsa[-1]
+        last_episode_rewards_td_learning[run] = episode_rewards_td_learning[-1]
     
     #THIS WILL PLOT THE GRAPH
-    # plot_rewards(q_learning_rewards, sarsa_rewards, td_learning_rewards, num_runs)
+    plot_rewards(q_learning_rewards, sarsa_rewards, td_learning_rewards, num_runs)
 
     # Compute statistics 
-    q_learning_avg, q_learning_std = compute_statistics(q_learning_rewards)
-    sarsa_avg, sarsa_std = compute_statistics(sarsa_rewards)
-    td_learning_avg, td_learning_std = compute_statistics(td_learning_rewards)
+    q_learning_avg, q_learning_std = compute_statistics(last_episode_rewards_q_learning)
+    sarsa_avg, sarsa_std = compute_statistics(last_episode_rewards_sarsa)
+    td_learning_avg, td_learning_std = compute_statistics(last_episode_rewards_td_learning)
     
     
-    # THIS WILL CREATE GRAPH
+    # THIS WILL CREATE TABLE, the table is the average total reward at the 1000th episode
     # YOU NEED TO COMMENT THIS OUT TO SEE THE GRAPH!!! can only see one at a time!!
     display_table(q_learning_avg, q_learning_std, sarsa_avg, sarsa_std, td_learning_avg, td_learning_std)
     

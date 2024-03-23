@@ -109,6 +109,7 @@ def compute_statistics(rewards):
     average_reward = np.mean(rewards)
     std_reward = np.std(rewards)
     return average_reward, std_reward
+
 import matplotlib.pyplot as plt
 
 def plot_rewards(q_learning_rewards, sarsa_rewards, td_learning_rewards, num_runs):
@@ -127,8 +128,7 @@ def plot_rewards(q_learning_rewards, sarsa_rewards, td_learning_rewards, num_run
     plt.show()
     
 def display_table(q_learning_avg, q_learning_std, sarsa_avg, sarsa_std, td_learning_avg, td_learning_std):
-    labels = ['Algorithm', 'Mean', 'STD. DEV.']
-    
+    labels = ['ALGORITHM', 'MEAN', 'STD. DEV.']
     # Round total rewards
     q_learning_avg = round(q_learning_avg, 2)
     sarsa_avg = round(sarsa_avg, 2)
@@ -141,22 +141,21 @@ def display_table(q_learning_avg, q_learning_std, sarsa_avg, sarsa_std, td_learn
         ['SARSA', sarsa_avg, sarsa_std],
         ['TD-Learning', td_learning_avg, td_learning_std]
     ]
-    
     fig, ax = plt.subplots(figsize=(4, 3))  
     ax.axis('tight')
     ax.axis('off')
-    table = ax.table(cellText=data, colLabels=labels, cellLoc='center', loc='center')
-
-    # Formatting
+    table = ax.table(cellText=data, colLabels=labels, cellLoc='center', loc='center', 
+                     edges='open')  
     table.auto_set_font_size(False)
     table.set_fontsize(10) 
     table.scale(1.2, 1.2)  
     for (row, col), cell in table.get_celld().items():
-        if row == 0:
-            cell.set_text_props(fontsize=12, weight='bold', fontfamily='Times New Roman')  
-        else:
-            cell.set_text_props(fontsize=10, fontfamily='Times New Roman')  
+        cell.set_text_props(fontsize=10, fontfamily='Times New Roman') 
     plt.title('Algorithm Performance', fontsize=14, fontweight='bold', fontfamily='Times New Roman')  
+    # Add horizontal line below header and after data
+    ax.axhline(y=0.01, color='black', linewidth=1) 
+    ax.axhline(y=0.02, color='black', linewidth=1)  
+    ax.axhline(y=-0.02, color='black', linewidth=1) 
     plt.show()
 
 

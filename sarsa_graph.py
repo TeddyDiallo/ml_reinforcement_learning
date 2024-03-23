@@ -22,7 +22,7 @@ def main():
     # the model will train for 1000 episodes with 99 steps in each episode
     numEpisodes = 1000
     maxSteps = 99
-    numRuns = 30  # Number of runs to average over
+    numRuns = 10  # Number of runs to average over
 
     averaged_episode_rewards = np.zeros(numEpisodes)  # Initialize an array to store averaged rewards per episode
 
